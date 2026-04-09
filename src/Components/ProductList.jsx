@@ -9,6 +9,7 @@ function ProductList() {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const [pname,setname]=useState("");
   const [pprice,setprice]=useState("");
+  const [pimage, setPimage] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [search, setSearch] = useState("");
   const [cart, setCart] = useState([]);
@@ -22,6 +23,10 @@ function ProductList() {
     console.log(event.target.value);
     setprice(event.target.value);
   }
+  function pimagechange(event){
+    console.log(event.target.value);
+    setPimage(event.target.value);
+  }
   const userKey = `products_${currentUser?.email}`;
   const [products, setproduct] = useState(
   JSON.parse(localStorage.getItem(userKey)) || []
@@ -32,9 +37,10 @@ function ProductList() {
     return;
   }
     const newProduct={
-      id: products.length + 1,
+      id: Date.now(),
       name: pname,
       price: pprice,
+    image: pimage ||""
     }
     const updateproduct=[...products,newProduct]
 
@@ -42,6 +48,7 @@ function ProductList() {
     localStorage.setItem(userKey, JSON.stringify(updateproduct));
     setname("");
     setprice("");
+    setPimage("")
   }
   function addToCart(product) {
    const existing = cart.find(item => item.id === product.id);
@@ -111,6 +118,14 @@ function decreaseQty(id) {
     className="form-control mb-2"
     placeholder="enter product price"
     onChange={ppricechange}
+    />
+    <label>Product Image URL:</label>
+    <input
+    type="text"
+    className="form-control mb-2"
+    placeholder="Enter image URL"
+    value={pimage}
+    onChange={pimagechange}
     />
     <button className="btn btn-success mb-3" onClick={addproduct}>
     Add Product

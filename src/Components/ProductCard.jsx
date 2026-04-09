@@ -3,6 +3,15 @@ function ProductCard({ product, onClick,addToCart }) {
    const navigate = useNavigate();
   return (
     <div className="card mb-3 shadow">
+  <img
+  src={product.image ? product.image : "https://cdn-icons-png.flaticon.com/512/1170/1170678.png"}
+  alt={product.name}
+  onError={(e) => {
+    e.target.src = "https://cdn-icons-png.flaticon.com/512/1170/1170678.png";
+  }}
+  className="img-fluid mb-2"
+  style={{ height: "150px", objectFit: "contain", width: "100%" }}
+/>
       <div className="card-body text-center">
         <h5 className="fw-bold mb-0 text-truncate"
           >ProductName:{product.name}</h5>
